@@ -195,6 +195,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,6 +209,21 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Dashboard\Content\css\simple-sidebar.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -218,6 +235,22 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -267,6 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
