@@ -13,6 +13,8 @@
 	<link href="~/Areas/Dashboard/Content/css/simple-sidebar.css" rel="stylesheet" />
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+	<script src="~/Areas/Dashboard/Content/vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
 
@@ -24,7 +26,7 @@
 				<i class="fas fa-hotel mr-1"></i> HMS
 			</div>
 			<div class="list-group list-group-flush">
-				<a href="@Url.Action("AccomodationType", "Accomodations")" class="list-group-item list-group-item-action bg-light">
+				<a href="@Url.Action("Index", "AccomodationTypes")" class="list-group-item list-group-item-action bg-light">
 					<i class="fas fa-building mr-1"></i> Accomodation Types
 				</a>
 				<a href="@Url.Action("Index", "Roles")" class="list-group-item list-group-item-action bg-light">
@@ -73,7 +75,6 @@
 	}
 
 	<!-- /#wrapper -->
-	<script src="~/Areas/Dashboard/Content/vendor/jquery/jquery.min.js"></script>
 	<script src="~/Areas/Dashboard/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Menu Toggle Script -->

@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+	<div class="col col-lg-12">
+		<h2>Accomodation Types</h2>
+		<hr />
+	</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col col-lg-12">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Search.">
+			<div class="input-group-append">
+				<button class="btn btn-outline-primary" type="button">Search</button>
+				<button class="btn btn-outline-secondary" type="button">Reset</button>
+				<button id="createButton" class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal">Create</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col col-lg-12">
+		@{ Html.RenderAction("Listing"); }
+	</div>
+</div>
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">		
+	</div>
+</div>
+
+<script>
+	$("#createButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "AccomodationTypes")',
+		})
+		.done(function (response) {
+			$("#actionModal .modal-dialog").html(response);
+		});
+	});
+</script>
