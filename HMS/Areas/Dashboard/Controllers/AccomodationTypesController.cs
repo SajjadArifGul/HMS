@@ -13,24 +13,30 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccomodationTypesService accomodationTypesService = new AccomodationTypesService();
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Listing()
+        public ActionResult Index(string searchTerm)
         {
             AccomodationTypesListingModel model = new AccomodationTypesListingModel();
 
-            model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
+            model.SearchTerm = searchTerm;
 
-            return PartialView("_Listing", model);
+            model.AccomodationTypes = accomodationTypesService.SearchAccomodationTypes(searchTerm);
+            
+            return View(model);
         }
-
+        
         [HttpGet]
-        public ActionResult Action()
+        public ActionResult Action(int? ID)
         {
             AccomodationTypeActionModel model = new AccomodationTypeActionModel();
+
+            if(ID.HasValue) //we are trying to edit a record
+            {
+                var accomodationType = accomodationTypesService.GetAccomodationTypeByID(ID.Value);
+
+                model.ID = accomodationType.ID;
+                model.Name = accomodationType.Name;
+                model.Description = accomodationType.Description;
+            }
 
             return PartialView("_Action", model);
         }
@@ -40,20 +46,69 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             JsonResult json = new JsonResult();
 
-            AccomodationType accomodationType = new AccomodationType();
+            var result = false;
 
-            accomodationType.Name = model.Name;
-            accomodationType.Description = model.Description;
+            if (model.ID > 0) //we are trying to edit a record
+            {
+                var accomodationType = accomodationTypesService.GetAccomodationTypeByID(model.ID);
 
-            var result = accomodationTypesService.SaveAccomodationType(accomodationType);
+                accomodationType.Name = model.Name;
+                accomodationType.Description = model.Description;
 
+                result = accomodationTypesService.UpdateAccomodationType(accomodationType);
+            }
+            else //we are trying to create a record
+            {
+                AccomodationType accomodationType = new AccomodationType();
+
+                accomodationType.Name = model.Name;
+                accomodationType.Description = model.Description;
+
+                result = accomodationTypesService.SaveAccomodationType(accomodationType);
+            }
+            
             if(result)
             {
                 json.Data = new { Success = true };
             }
             else
             {
-                json.Data = new { Success = false, Message = "Unable to add Accomodation Type." };
+                json.Data = new { Success = false, Message = "Unable to perform action on Accomodation Types." };
+            }
+
+            return json;
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int ID)
+        {
+            AccomodationTypeActionModel model = new AccomodationTypeActionModel();
+
+            var accomodationType = accomodationTypesService.GetAccomodationTypeByID(ID);
+
+            model.ID = accomodationType.ID;
+
+            return PartialView("_Delete", model);
+        }
+
+        [HttpPost]
+        public JsonResult Delete(AccomodationTypeActionModel model)
+        {
+            JsonResult json = new JsonResult();
+
+            var result = false;
+
+            var accomodationType = accomodationTypesService.GetAccomodationTypeByID(model.ID);
+            
+            result = accomodationTypesService.DeleteAccomodationType(accomodationType);
+
+            if (result)
+            {
+                json.Data = new { Success = true };
+            }
+            else
+            {
+                json.Data = new { Success = false, Message = "Unable to perform action on Accomodation Types." };
             }
 
             return json;

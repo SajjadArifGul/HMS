@@ -22,8 +22,8 @@
 						@accomodationType.Description
 					</td>
 					<td>
-						<button type="button" class="btn btn-primary">Edit</button>
-						<button type="button" class="btn btn-danger">Delete</button>
+						<button data-href="@Url.Action("Action", "AccomodationTypes", new { ID = accomodationType.ID })" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
+						<button data-href="@Url.Action("Delete", "AccomodationTypes", new { ID = accomodationType.ID })" type="button" class="data-btn btn btn-danger"  data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
 					</td>
 				</tr>
 			}
