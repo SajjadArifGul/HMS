@@ -195,10 +195,12 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccomodationPackagesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomodationTypesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
-    <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypesModels.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomodationPackagesViewModels.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypesViewModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -209,6 +211,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\PageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Dashboard\Content\css\simple-sidebar.css" />
@@ -257,6 +260,10 @@
     <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Listing.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Action.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
