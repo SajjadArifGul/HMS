@@ -25,10 +25,9 @@ namespace HMS.Areas.Dashboard.Controllers
             model.SearchTerm = searchTerm;
             model.AccomodationTypeID = accomodationTypeID;
 
-            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeID, page.Value, recordSize);
-            
             model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
 
+            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeID, page.Value, recordSize);
             var totalRecords = accomodationPackagesService.SearchAccomodationPackagesCount(searchTerm, accomodationTypeID);
 
             model.Pager = new Pager(totalRecords, page, recordSize);

@@ -59,8 +59,7 @@ namespace HMS.Services
             
             return accomodationPackages.Count();
         }
-
-
+        
         public AccomodationPackage GetAccomodationPackageByID(int ID)
         {
             using (var context = new HMSContext())

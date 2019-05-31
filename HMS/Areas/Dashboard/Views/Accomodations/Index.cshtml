@@ -1,0 +1,62 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomodationsListingModel
+
+<div class="row">
+	<div class="col col-lg-12">
+		<h2>Accomodations</h2>
+		<hr />
+	</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col col-lg-12">
+		<form>
+			<div class="input-group">
+				<input type="text" name="searchterm" class="form-control" placeholder="Search." value="@Model.SearchTerm">
+
+				@if (Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+				{
+					<select name="AccomodationPackageID" class="form-control">
+						<option value="0">
+							Select Accomodation Package
+						</option>
+						@foreach (var accomodationPackage in Model.AccomodationPackages)
+						{
+							<option value="@accomodationPackage.ID" @(accomodationPackage.ID == Model.AccomodationPackageID ? "selected" : string.Empty)>
+								@accomodationPackage.Name
+							</option>
+						}
+					</select>
+				}
+				<div class="input-group-append">
+					<button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i> Search</button>
+					<a class="btn btn-outline-secondary" href="@Url.Action("Index", "Accomodations")"><i class="fas fa-redo-alt mr-1"></i> Reset</a>
+					<button data-href="@Url.Action("Action", "Accomodations")" class="data-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal"><i class="fas fa-plus mr-1"></i> Create</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col col-lg-12">
+		@{
+			Html.RenderPartial("_Listing", Model);
+		}
+	</div>
+</div>
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+	</div>
+</div>
+
+<script>
+	$(".data-btn").click(function () {
+		$.ajax({
+			url: $(this).attr("data-href"),
+		})
+		.done(function (response) {
+			$("#actionModal .modal-dialog").html(response);
+		});
+	});
+</script>

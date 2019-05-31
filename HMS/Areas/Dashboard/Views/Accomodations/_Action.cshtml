@@ -1,0 +1,76 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomodationActionModel
+
+@if (Model != null)
+{
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">
+				@if (Model.ID > 0)
+				{
+					<span>Edit Accomodation</span>
+				}
+				else
+				{
+					<span>Create Accomodation</span>
+				}
+			</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="actionForm">
+				<input type="hidden" name="ID" value="@Model.ID" />
+				<div class="form-group">
+					<label>Accomodation Packages</label>					
+					<select class="form-control" name="AccomodationPackageID">
+						@if(Model.AccomodationPackages != null)
+						{
+							foreach (var accomodationPackages in Model.AccomodationPackages)
+							{
+								<option value="@accomodationPackages.ID" @(accomodationPackages.ID == Model.AccomodationPackageID ? "selected" : string.Empty)>
+									@accomodationPackages.Name
+								</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" name="Name" placeholder="Enter Accomodation Name." value="@Model.Name">
+				</div>
+				<div class="form-group">
+					<label>Description</label>
+					<textarea class="form-control" name="Description" placeholder="Enter Accomodation Description.">@Model.Description</textarea>
+				</div>
+			</form>
+
+			<div class="errorDiv">
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+		</div>
+	</div>
+}
+
+<script>
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Accomodations")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.Success)
+			{
+				location.reload();
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>
