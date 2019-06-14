@@ -1,0 +1,87 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomodationPackagesListingModel
+
+@if (Model != null && Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+{
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Fee Per Night</th>
+				<th scope="col">Accomodation Type</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var accomodationPackage in Model.AccomodationPackages)
+			{
+				<tr>
+					<td>
+						@accomodationPackage.Name
+					</td>
+					<td>
+						@accomodationPackage.FeePerNight
+					</td>
+					<td>
+						@if (accomodationPackage.AccomodationType != null)
+						{
+							@accomodationPackage.AccomodationType.Name
+						}
+					</td>
+					<td>
+						<button data-href="@Url.Action("Action", "AccomodationPackages", new { ID = accomodationPackage.ID })" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
+						<button data-href="@Url.Action("Delete", "AccomodationPackages", new { ID = accomodationPackage.ID })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	if (Model.Pager.EndPage > 1)
+	{
+		<nav>
+			<ul class="pagination">
+				@if (Model.Pager.CurrentPage > 1)
+				{
+					<li class="page-item">
+						<a class="page-link" href="@Url.Action("Index", "AccomodationPackages")">
+							<i class="fas fa-angle-double-left"></i>
+						</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeID })">
+							<i class="fas fa-angle-left"></i>
+						</a>
+					</li>
+				}
+
+				@for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+				{
+					<li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+						<a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = page, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeID })">@page</a>
+					</li>
+				}
+
+				@if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+				{
+					<li class="page-item">
+						<a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeID })">
+							<i class="fas fa-angle-right"></i>
+						</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="@Url.Action("Index", "AccomodationPackages", new { page = Model.Pager.TotalPages, searchTerm = Model.SearchTerm, accomodationTypeID = Model.AccomodationTypeID })">
+							<i class="fas fa-angle-double-right"></i>
+						</a>
+					</li>
+				}
+			</ul>
+		</nav>
+	}
+}
+else
+{
+	<div class="alert alert-warning" role="alert">
+		Sorry! No records exist.
+	</div>
+}

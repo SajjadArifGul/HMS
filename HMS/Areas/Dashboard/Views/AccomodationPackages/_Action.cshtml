@@ -1,0 +1,80 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomodationPackageActionModel
+
+@if (Model != null)
+{
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">
+				@if (Model.ID > 0)
+				{
+					<span>Edit Accomodation Package</span>
+				}
+				else
+				{
+					<span>Create Accomodation Package</span>
+				}
+			</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="actionForm">
+				<input type="hidden" name="ID" value="@Model.ID" />
+				<div class="form-group">
+					<label>Accomodation Type</label>					
+					<select class="form-control" name="AccomodationTypeID">
+						@if(Model.AccomodationTypes != null)
+						{
+							foreach (var accomodationType in Model.AccomodationTypes)
+							{
+								<option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected" : string.Empty)>
+									@accomodationType.Name
+								</option>
+							}
+						}
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" name="Name" placeholder="Enter Accomodation Package Name." value="@Model.Name">
+				</div>
+				<div class="form-group">
+					<label>No Of Rooms</label>
+					<input class="form-control" name="NoOfRoom" placeholder="Enter No Of Rooms." value="@Model.NoOfRoom">
+				</div>
+				<div class="form-group">
+					<label>FeePerNight</label>
+					<input class="form-control" name="FeePerNight" placeholder="Enter Fee Per Night." value="@Model.FeePerNight">
+				</div>
+			</form>
+
+			<div class="errorDiv">
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+		</div>
+	</div>
+}
+
+<script>
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "AccomodationPackages")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.Success)
+			{
+				location.reload();
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>
