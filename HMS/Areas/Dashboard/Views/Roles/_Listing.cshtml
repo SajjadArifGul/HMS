@@ -17,10 +17,13 @@
 			{
 				<tr>
 					<td>
+						@role.Id
 					</td>
 					<td>
+						@role.Name
 					</td>
 					<td>
+						@role.Users.Count
 					</td>
 					<td>
 						<button data-href="@Url.Action("Action", "Roles", new { ID = role.Id })" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
