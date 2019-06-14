@@ -1,0 +1,58 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.RoleActionModel
+
+@if (Model != null)
+{
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">
+				@if (!string.IsNullOrEmpty(Model.ID))
+				{
+					<span>Edit Role</span>
+				}
+				else
+				{
+					<span>Create Role</span>
+				}
+			</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<form id="actionForm">
+				<input type="hidden" name="ID" value="@Model.ID" />
+				<div class="form-group">
+					<label>Name</label>
+					<input class="form-control" name="Name" placeholder="Enter Role Name." value="@Model.Name">
+				</div>
+			</form>
+
+			<div class="errorDiv">
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+		</div>
+	</div>
+}
+
+<script>
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Roles")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.Success)
+			{
+				window.location.href = "@Url.Action("Index", "Roles")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>
