@@ -64,7 +64,7 @@ namespace HMS.Areas.Dashboard.Controllers
             RoleManager = roleManager;
         }
                 
-        public ActionResult Index(string searchTerm, string roleID, int? page)
+        public async Task<ActionResult> Index(string searchTerm, string roleID, int? page)
         {
             int recordSize = 10;
             page = page ?? 1;
@@ -75,16 +75,16 @@ namespace HMS.Areas.Dashboard.Controllers
             model.RoleID = roleID;
             model.Roles = RoleManager.Roles.ToList();
 
-            model.Users = SearchUsers(searchTerm, roleID, page.Value, recordSize);
+            model.Users = await SearchUsers(searchTerm, roleID, page.Value, recordSize);
 
-            var totalRecords = SearchUsersCount(searchTerm, roleID);
+            var totalRecords = await SearchUsersCount(searchTerm, roleID);
 
             model.Pager = new Pager(totalRecords, page, recordSize);
 
             return View(model);
         }
 
-        public IEnumerable<HMSUser> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
+        public async Task<IEnumerable<HMSUser>> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
         {
             var users = UserManager.Users.AsQueryable();
 
@@ -95,7 +95,11 @@ namespace HMS.Areas.Dashboard.Controllers
             
             if (!string.IsNullOrEmpty(roleID))
             {
-                //users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RoleManager.FindByIdAsync(roleID);
+
+                var userIDs = role.Users.Select(x=>x.UserId).ToList();
+                
+                users = users.Where(x => userIDs.Contains(x.Id));
             }
 
             var skip = (page - 1) * recordSize;
@@ -103,7 +107,7 @@ namespace HMS.Areas.Dashboard.Controllers
             return users.OrderBy(x => x.Email).Skip(skip).Take(recordSize).ToList();
         }
 
-        public int SearchUsersCount(string searchTerm, string roleID)
+        public async Task<int> SearchUsersCount(string searchTerm, string roleID)
         {
             var users = UserManager.Users.AsQueryable();
 
@@ -114,9 +118,12 @@ namespace HMS.Areas.Dashboard.Controllers
 
             if (!string.IsNullOrEmpty(roleID))
             {
-                //users = users.Where(a => a.Email.ToLower().Contains(searchTerm.ToLower()));
-            }
-            
+                var role = await RoleManager.FindByIdAsync(roleID);
+
+                var userIDs = role.Users.Select(x => x.UserId).ToList();
+
+                users = users.Where(x => userIDs.Contains(x.Id));
+            }            
 
             return users.Count();
         }
@@ -219,54 +226,47 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpGet]
         public async Task<ActionResult> UserRoles(string ID)
         {
-
             UserRolesModel model = new UserRolesModel();
-            model.Roles = RoleManager.Roles.ToList();
-
+            
+            model.UserID = ID;
             var user = await UserManager.FindByIdAsync(ID);
             var userRoleIDs = user.Roles.Select(x => x.RoleId).ToList();
 
             model.UserRoles = RoleManager.Roles.Where(x => userRoleIDs.Contains(x.Id)).ToList();
-            
+            model.Roles = RoleManager.Roles.Where(x=> !userRoleIDs.Contains(x.Id)).ToList();
+
             return PartialView("_UserRoles", model);
         }
-
+        
         [HttpPost]
-        public async Task<JsonResult> UserRoles(UserActionModel model)
+        public async Task<JsonResult> UserRoleOperation(string userID, string roleID, bool isDelete = false)
         {
             JsonResult json = new JsonResult();
 
-            IdentityResult result = null;
+            var user = await UserManager.FindByIdAsync(userID);
 
-            if (!string.IsNullOrEmpty(model.ID)) //we are trying to edit a record
+            var role = await RoleManager.FindByIdAsync(roleID);
+
+            if(user != null && role != null)
             {
-                var user = await UserManager.FindByIdAsync(model.ID);
+                IdentityResult result = null;
 
-                user.FullName = model.FullName;
-                user.Email = model.Email;
-                user.UserName = model.Username;
-                user.Country = model.Country;
-                user.City = model.City;
-                user.Address = model.Address;
+                if(!isDelete)
+                {
+                    result = await UserManager.AddToRoleAsync(userID, role.Name);
+                }
+                else
+                {
+                    result = await UserManager.RemoveFromRoleAsync(userID, role.Name);
+                }
 
-                result = await UserManager.UpdateAsync(user);
+                json.Data = new { Success = result.Succeeded, Message = string.Join("," , result.Errors) };
             }
-            else //we are trying to create a record
+            else
             {
-                var user = new HMSUser();
-
-                user.FullName = model.FullName;
-                user.Email = model.Email;
-                user.UserName = model.Username;
-                user.Country = model.Country;
-                user.City = model.City;
-                user.Address = model.Address;
-
-                result = await UserManager.CreateAsync(user);
-            }
-
-            json.Data = new { Success = result.Succeeded, Message = string.Join(", ", result.Errors) };
-
+                json.Data = new { Success = false, Message = "Invalid operation." };
+            }            
+            
             return json;
         }
     }
