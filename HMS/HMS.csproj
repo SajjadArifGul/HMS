@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -206,6 +207,8 @@
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypesViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\RolesViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\UsersViewModels.cs" />
+    <Compile Include="Code\Variables.cs" />
+    <Compile Include="Controllers\AccomodationsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -216,6 +219,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AccomodationsViewModels.cs" />
+    <Compile Include="ViewModels\HomeViewModels.cs" />
     <Compile Include="ViewModels\PageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,14 +239,23 @@
     <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.js" />
     <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.js" />
     <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flexslider.css" />
+    <Content Include="Content\icomoon.css" />
+    <Content Include="Content\magnific-popup.css" />
+    <Content Include="Content\owl.carousel.min.css" />
+    <Content Include="Content\owl.theme.default.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\flaticon\backup.txt" />
+    <Content Include="fonts\flaticon\font\flaticon.css" />
+    <Content Include="fonts\flaticon\font\flaticon.html" />
+    <Content Include="fonts\flaticon\font\Flaticon.svg" />
+    <Content Include="fonts\icomoon\icomoon.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -282,18 +296,51 @@
     <Content Include="Areas\Dashboard\Views\Roles\_Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\Roles\_Action.cshtml" />
     <Content Include="Areas\Dashboard\Views\Users\_UserRoles.cshtml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
+    <Content Include="images\amenities-1.jpg" />
+    <Content Include="images\amenities-2.jpg" />
+    <Content Include="images\amenities-3.jpg" />
+    <Content Include="images\blog-1.jpg" />
+    <Content Include="images\blog-2.jpg" />
+    <Content Include="images\blog-3.jpg" />
+    <Content Include="images\cover_img_1.jpg" />
+    <Content Include="images\img_bg_1.jpg" />
+    <Content Include="images\img_bg_2.jpg" />
+    <Content Include="images\img_bg_3.jpg" />
+    <Content Include="images\img_bg_4.jpg" />
+    <Content Include="images\img_bg_5.jpg" />
+    <Content Include="images\loader.gif" />
+    <Content Include="images\loc.png" />
+    <Content Include="images\menu-1.jpg" />
+    <Content Include="images\menu-2.jpg" />
+    <Content Include="images\menu-3.jpg" />
+    <Content Include="images\menu-4.jpg" />
+    <Content Include="images\menu-5.jpg" />
+    <Content Include="images\menu-6.jpg" />
+    <Content Include="images\menu-7.jpg" />
+    <Content Include="images\menu-8.jpg" />
+    <Content Include="images\menu-9.jpg" />
+    <Content Include="images\person1.jpg" />
+    <Content Include="images\person2.jpg" />
+    <Content Include="images\person3.jpg" />
+    <Content Include="images\room-1.jpg" />
+    <Content Include="images\room-2.jpg" />
+    <Content Include="images\room-3.jpg" />
+    <Content Include="images\room-4.jpg" />
+    <Content Include="images\room-5.jpg" />
+    <Content Include="images\room-6.jpg" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\google_map.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.flexslider-min.js" />
+    <Content Include="Scripts\jquery.magnific-popup.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.waypoints.min.js" />
+    <Content Include="Scripts\magnific-popup-options.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\modernizr-2.6.2.min.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -305,8 +352,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -334,12 +379,104 @@
     <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <Content Include="Content\.DS_Store" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\sass\.DS_Store" />
+    <Content Include="Content\sass\bootstrap.scss" />
+    <Content Include="Content\sass\bootstrap\.DS_Store" />
+    <Content Include="Content\sass\bootstrap\mixins\_alerts.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_center-block.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_forms.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_grid.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_image.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_labels.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_opacity.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_panels.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_resize.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_size.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="Content\sass\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="Content\sass\bootstrap\_alerts.scss" />
+    <Content Include="Content\sass\bootstrap\_badges.scss" />
+    <Content Include="Content\sass\bootstrap\_breadcrumbs.scss" />
+    <Content Include="Content\sass\bootstrap\_button-groups.scss" />
+    <Content Include="Content\sass\bootstrap\_buttons.scss" />
+    <Content Include="Content\sass\bootstrap\_carousel.scss" />
+    <Content Include="Content\sass\bootstrap\_close.scss" />
+    <Content Include="Content\sass\bootstrap\_code.scss" />
+    <Content Include="Content\sass\bootstrap\_component-animations.scss" />
+    <Content Include="Content\sass\bootstrap\_dropdowns.scss" />
+    <Content Include="Content\sass\bootstrap\_forms.scss" />
+    <Content Include="Content\sass\bootstrap\_glyphicons.scss" />
+    <Content Include="Content\sass\bootstrap\_grid.scss" />
+    <Content Include="Content\sass\bootstrap\_input-groups.scss" />
+    <Content Include="Content\sass\bootstrap\_jumbotron.scss" />
+    <Content Include="Content\sass\bootstrap\_labels.scss" />
+    <Content Include="Content\sass\bootstrap\_list-group.scss" />
+    <Content Include="Content\sass\bootstrap\_media.scss" />
+    <Content Include="Content\sass\bootstrap\_mixins.scss" />
+    <Content Include="Content\sass\bootstrap\_modals.scss" />
+    <Content Include="Content\sass\bootstrap\_navbar.scss" />
+    <Content Include="Content\sass\bootstrap\_navs.scss" />
+    <Content Include="Content\sass\bootstrap\_normalize.scss" />
+    <Content Include="Content\sass\bootstrap\_pager.scss" />
+    <Content Include="Content\sass\bootstrap\_pagination.scss" />
+    <Content Include="Content\sass\bootstrap\_panels.scss" />
+    <Content Include="Content\sass\bootstrap\_popovers.scss" />
+    <Content Include="Content\sass\bootstrap\_print.scss" />
+    <Content Include="Content\sass\bootstrap\_progress-bars.scss" />
+    <Content Include="Content\sass\bootstrap\_responsive-embed.scss" />
+    <Content Include="Content\sass\bootstrap\_responsive-utilities.scss" />
+    <Content Include="Content\sass\bootstrap\_scaffolding.scss" />
+    <Content Include="Content\sass\bootstrap\_tables.scss" />
+    <Content Include="Content\sass\bootstrap\_theme.scss" />
+    <Content Include="Content\sass\bootstrap\_thumbnails.scss" />
+    <Content Include="Content\sass\bootstrap\_tooltip.scss" />
+    <Content Include="Content\sass\bootstrap\_type.scss" />
+    <Content Include="Content\sass\bootstrap\_utilities.scss" />
+    <Content Include="Content\sass\bootstrap\_variables.scss" />
+    <Content Include="Content\sass\bootstrap\_wells.scss" />
+    <Content Include="Content\sass\style.scss" />
+    <Content Include="Content\sass\_bootstrap-compass.scss" />
+    <Content Include="Content\sass\_bootstrap-mincer.scss" />
+    <Content Include="Content\sass\_bootstrap-sprockets.scss" />
+    <Content Include="Content\style.css.map" />
+    <Content Include="fonts\bootstrap\.DS_Store" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\flaticon\.DS_Store" />
+    <Content Include="fonts\flaticon\font\Flaticon.eot" />
+    <Content Include="fonts\flaticon\font\Flaticon.ttf" />
+    <Content Include="fonts\flaticon\font\Flaticon.woff" />
+    <Content Include="fonts\flaticon\font\_flaticon.scss" />
+    <Content Include="fonts\flaticon\license\license.pdf" />
+    <Content Include="fonts\icomoon\.DS_Store" />
+    <Content Include="fonts\icomoon\icomoon.eot" />
+    <Content Include="fonts\icomoon\icomoon.ttf" />
+    <Content Include="fonts\icomoon\icomoon.woff" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Accomodations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HMS.Data\HMS.Data.csproj">

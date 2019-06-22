@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HMS.ViewModels;
+using HMS.Services;
 
 namespace HMS.Controllers
 {
@@ -10,21 +12,13 @@ namespace HMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            HomeViewModel model = new HomeViewModel();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            AccomodationTypesService service = new AccomodationTypesService();
 
-            return View();
-        }
+            model.AccomodationTypes = service.GetAllAccomodationTypes();
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(model);
         }
     }
 }

@@ -1,0 +1,81 @@
+﻿@model HMS.ViewModels.AccomodationsViewModel
+
+<aside id="colorlib-hero">
+	<div class="flexslider">
+		<ul class="slides">
+			<li style="background-image: url(images/img_bg_5.jpg);">
+				<div class="overlay"></div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+							<div class="slider-text-inner slider-text-inner2 text-center">
+								<h2>Choose our Best</h2>
+								<h1>Rooms &amp; Suites</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</aside>
+
+@if (Model != null && Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+{
+<div id="colorlib-rooms" class="colorlib-light-grey">
+	<div class="container">
+		<div class="row">
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					Select Accomodation Package
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					@foreach (var accomodationPackage in Model.AccomodationPackages)
+					{
+						<li class="@( Model.SelectedAccomodationPackageID == accomodationPackage.ID ? "active" : string.Empty )">
+							<a href="@Url.Action("Index", "Accomodations", new { area = "" , accomodationTypeID = Model.AccomodationType.ID , accomodationPackageID = accomodationPackage.ID })">
+								@accomodationPackage.Name
+							</a>
+						</li>
+					}
+				</ul>
+			</div>
+
+			@if (Model.Accomodations != null && Model.Accomodations.Count() > 0)
+			{
+				foreach (var accomodation in Model.Accomodations)
+				{
+				<div class="col-md-4 room-wrap animate-box">
+					<a href="images/room-1.jpg" class="room image-popup-link" style="background-image: url(images/room-1.jpg);"></a>
+					<div class="desc text-center">
+						<h3>
+							<a href="rooms-suites.html">
+								@accomodation.Name
+							</a>
+						</h3>
+						<p class="price">
+							<span class="currency">$</span>
+							<span class="price-room">@accomodation.AccomodationPackage.FeePerNight</span>
+							<span class="per">/ per night</span>
+						</p>
+						<ul>
+							<li>
+								No. Of Rooms: @accomodation.AccomodationPackage.NoOfRoom
+							</li>							
+						</ul>
+						<p><a class="btn btn-primary">Book now!</a></p>
+					</div>
+				</div>
+				}
+			}
+			else
+			{
+				<div class="alert alert-warning" role="alert">
+					No Accomodation found.
+				</div>
+			}
+		</div>
+	</div>
+</div>
+}
