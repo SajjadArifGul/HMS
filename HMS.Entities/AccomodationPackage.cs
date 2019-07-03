@@ -16,5 +16,7 @@ namespace HMS.Entities
         public string Name { get; set; }
         public int NoOfRoom { get; set; }
         public decimal FeePerNight { get; set; }
+
+        public List<AccomodationPackagePicture> AccomodationPackagePictures { get; set; }
     }
 }

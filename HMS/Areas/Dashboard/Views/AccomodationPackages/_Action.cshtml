@@ -19,35 +19,39 @@
 			</button>
 		</div>
 		<div class="modal-body">
-			<form id="actionForm">
-				<input type="hidden" name="ID" value="@Model.ID" />
-				<div class="form-group">
-					<label>Accomodation Type</label>					
-					<select class="form-control" name="AccomodationTypeID">
-						@if(Model.AccomodationTypes != null)
-						{
-							foreach (var accomodationType in Model.AccomodationTypes)
-							{
-								<option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected" : string.Empty)>
-									@accomodationType.Name
-								</option>
-							}
-						}
-					</select>
-				</div>
-				<div class="form-group">
-					<label>Name</label>
-					<input class="form-control" name="Name" placeholder="Enter Accomodation Package Name." value="@Model.Name">
-				</div>
-				<div class="form-group">
-					<label>No Of Rooms</label>
-					<input class="form-control" name="NoOfRoom" placeholder="Enter No Of Rooms." value="@Model.NoOfRoom">
-				</div>
-				<div class="form-group">
-					<label>FeePerNight</label>
-					<input class="form-control" name="FeePerNight" placeholder="Enter Fee Per Night." value="@Model.FeePerNight">
-				</div>
-			</form>
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Accomodation Type</label>
+                    <select class="form-control" name="AccomodationTypeID">
+                        @if (Model.AccomodationTypes != null)
+                        {
+                            foreach (var accomodationType in Model.AccomodationTypes)
+                            {
+                                <option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected" : string.Empty)>
+                                    @accomodationType.Name
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" name="Name" placeholder="Enter Accomodation Package Name." value="@Model.Name">
+                </div>
+                <div class="form-group">
+                    <label>No Of Rooms</label>
+                    <input class="form-control" name="NoOfRoom" placeholder="Enter No Of Rooms." value="@Model.NoOfRoom">
+                </div>
+                <div class="form-group">
+                    <label>FeePerNight</label>
+                    <input class="form-control" name="FeePerNight" placeholder="Enter Fee Per Night." value="@Model.FeePerNight">
+                </div>
+                <div class="form-group">
+                    <label>Pictures</label>
+                    <input id="selectPictures" class="form-control" name="Pictures" type="file" multiple>
+                </div>
+            </form>
 
 			<div class="errorDiv">
 
@@ -76,5 +80,27 @@
 				$(".errorDiv").html(response.Message);
 			}
 		});
-	});
+    });
+
+    $("#selectPictures").change(function () {
+
+        var pictures = this.files;
+
+        var formData = new FormData();
+
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Picture", pictures[i]);
+        }
+
+		$.ajax({
+			url: '@Url.Action("UploadPictures", "Dashboard")',
+            type: "post",
+            data: formData,
+            processData: false,
+			contentType: false
+		})
+        .done(function (response) {
+                debugger;
+		});
+    });
 </script>
