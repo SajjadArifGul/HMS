@@ -169,46 +169,68 @@
     </div>
 </div>
 
+<style>
+    .owl-carousel .owl-item img {
+  -webkit-backface-visibility: hidden;
+}
+</style>
+
 @if (Model.AccomodationTypes != null && Model.AccomodationTypes.Count() > 0)
 {
-	<div id="colorlib-rooms" class="colorlib-light-grey">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-					<span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
-					<h2>Accomodation Types</h2>
-					<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 animate-box">
-					<div class="owl-carousel owl-carousel2">
+    var i = 0;
 
-						@foreach (var accomodationType in Model.AccomodationTypes)
-						{
-							<div class="item">
-								<a href="/images/room-1.jpg" class="room image-popup-link" style="background-image: url(/images/room-1.jpg);"></a>
-								<div class="desc text-center">									
-									<h3>
-										<a href="@Url.Action("Index", "Accomodations", new { area = "" , accomodationTypeID = accomodationType.ID })">
-											@accomodationType.Name
-										</a>
-									</h3>
-									<p class="price">
-										@accomodationType.Description
-									</p>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-						}
-					</div>
-				</div>
-				<div class="col-md-12 text-center animate-box">
-					<a href="#">View all rooms <i class="icon-arrow-right3"></i></a>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div id="colorlib-rooms" class="colorlib-light-grey">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+                    <span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
+                    <h2>Accomodation</h2>
+                    <p>Select Accomodation Type</p>
+                    <p>
+                        @foreach (var accomodationType in Model.AccomodationTypes)
+                        {
+                            <button class="btn btn-sm changeAccomodationType" data-id="@accomodationType.ID">
+                                @accomodationType.Name
+                            </button>
+                        }
+                    </p>
+                </div>
+            </div>
+            @foreach (var accomodationType in Model.AccomodationTypes)
+            {
+                <div data-id="@accomodationType.ID" class="row accomodationTypesRow" style="@(i != 0 ? "display:none" : string.Empty)">
+                    <div class="col-md-12 animate-box">
+                        <div class="owl-carousel owl-carousel2">
+
+                            @foreach (var accomodationPackage in Model.AccomodationPackages.Where(x=>x.AccomodationTypeID == accomodationType.ID))
+                            {
+                                <div class="item">
+                                    <a href="/images/room-1.jpg" class="room image-popup-link" style="background-image: url(/images/room-1.jpg);"></a>
+                                    <div class="desc text-center">
+                                        <h3>
+                                            <a href="@Url.Action("Index", "Accomodations", new { area = "" , accomodationTypeID = accomodationType.ID })">
+                                                @accomodationPackage.Name
+                                            </a>
+                                        </h3>
+                                        <p class="price">
+                                            @accomodationPackage.FeePerNight
+                                        </p>
+                                        <p><a class="btn btn-primary btn-book">Book now!</a></p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center animate-box">
+                        <a href="#">View all rooms <i class="icon-arrow-right3"></i></a>
+                    </div>
+                </div>
+
+                i++;
+            }
+
+        </div>
+    </div>
 }
 
 <div id="colorlib-dining-bar">
