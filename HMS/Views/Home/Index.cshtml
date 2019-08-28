@@ -171,8 +171,8 @@
 
 <style>
     .owl-carousel .owl-item img {
-  -webkit-backface-visibility: hidden;
-}
+        -webkit-backface-visibility: hidden;
+    }
 </style>
 
 @if (Model.AccomodationTypes != null && Model.AccomodationTypes.Count() > 0)
@@ -180,57 +180,59 @@
     var i = 0;
 
     <div id="colorlib-rooms" class="colorlib-light-grey">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-                    <span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
-                    <h2>Accomodation</h2>
-                    <p>Select Accomodation Type</p>
-                    <p>
-                        @foreach (var accomodationType in Model.AccomodationTypes)
-                        {
-                            <button class="btn btn-sm changeAccomodationType" data-id="@accomodationType.ID">
-                                @accomodationType.Name
-                            </button>
-                        }
-                    </p>
+        @foreach (var accomodationType in Model.AccomodationTypes)
+        {
+            <div class="container accomodationTypesRow" data-id="@accomodationType.ID"  style="@(i != 0 ? "display:none" : string.Empty)">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+                        <span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
+                        <h2>Accomodations</h2>
+                        <p>Select Accomodation Type</p>
+                        <p>
+                            @foreach (var xAccomodationType in Model.AccomodationTypes)
+                            {
+                                <button class="btn btn-sm changeAccomodationType" data-id="@xAccomodationType.ID">
+                                    @xAccomodationType.Name
+                                </button>
+                            }
+                        </p>
+                    </div>
                 </div>
-            </div>
-            @foreach (var accomodationType in Model.AccomodationTypes)
-            {
-                <div data-id="@accomodationType.ID" class="row accomodationTypesRow" style="@(i != 0 ? "display:none" : string.Empty)">
+
+                <div class="row" >
                     <div class="col-md-12 animate-box">
                         <div class="owl-carousel owl-carousel2">
 
-                            @foreach (var accomodationPackage in Model.AccomodationPackages.Where(x=>x.AccomodationTypeID == accomodationType.ID))
+                            @foreach (var accomodationPackage in Model.AccomodationPackages.Where(x => x.AccomodationTypeID == accomodationType.ID))
                             {
+                                var thumbnailPicture = accomodationPackage.AccomodationPackagePictures != null ? accomodationPackage.AccomodationPackagePictures.FirstOrDefault() : null;
+                                var thumbnailURL = thumbnailPicture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+
                                 <div class="item">
-                                    <a href="/images/room-1.jpg" class="room image-popup-link" style="background-image: url(/images/room-1.jpg);"></a>
+                                    <a href="@Url.Action("Details", "Accomodations", new { accomodationPackageID = accomodationPackage.ID })" class="room" style="background-image: url(/images/site/@thumbnailURL);"></a>
                                     <div class="desc text-center">
                                         <h3>
-                                            <a href="@Url.Action("Index", "Accomodations", new { area = "" , accomodationTypeID = accomodationType.ID })">
+                                            <a href="@Url.Action("Details", "Accomodations", new { accomodationPackageID = accomodationPackage.ID })" >
                                                 @accomodationPackage.Name
                                             </a>
                                         </h3>
                                         <p class="price">
                                             @accomodationPackage.FeePerNight
                                         </p>
-                                        <p><a class="btn btn-primary btn-book">Book now!</a></p>
+                                        <p><a href="@Url.Action("Details", "Accomodations", new { accomodationPackageID = accomodationPackage.ID })"  class="btn btn-primary btn-book">Book now!</a></p>
                                     </div>
                                 </div>
                             }
                         </div>
                     </div>
-                    <div class="col-md-12 text-center animate-box">
-                        <a href="#">View all rooms <i class="icon-arrow-right3"></i></a>
-                    </div>
                 </div>
 
-                i++;
-            }
-
-        </div>
+            </div>
+            
+            i++;
+        }
     </div>
+
 }
 
 <div id="colorlib-dining-bar">

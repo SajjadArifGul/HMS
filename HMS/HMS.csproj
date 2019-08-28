@@ -327,6 +327,7 @@
     <Content Include="images\room-4.jpg" />
     <Content Include="images\room-5.jpg" />
     <Content Include="images\room-6.jpg" />
+    <Content Include="images\site\default-image.jpg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -424,11 +425,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Accomodations\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="images\site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

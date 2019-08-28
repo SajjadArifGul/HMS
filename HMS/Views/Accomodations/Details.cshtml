@@ -1,0 +1,57 @@
+﻿@model HMS.ViewModels.AccomodationPackageDetailsViewModel
+
+@{  
+   var thumbnailPicture = Model.AccomodationPackage.AccomodationPackagePictures != null ? Model.AccomodationPackage.AccomodationPackagePictures.FirstOrDefault() : null;
+   var thumbnailURL = thumbnailPicture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+}
+
+<aside id="colorlib-hero">
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background-image: url(/images/site/@thumbnailURL);">
+                <div class="overlay"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                            <div class="slider-text-inner slider-text-inner2 text-center">
+                                <h2>Accomodation Package</h2>
+                                <h1>@Model.AccomodationPackage.Name</h1>
+                                <h2>@Model.AccomodationPackage.AccomodationType.Name</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</aside>
+<div id="colorlib-amenities">
+    <div class="container">
+        <div class="row">
+            <div class="amenities-flex">
+                <div class="desc animate-box">
+                    <p class="price">
+                        <span class="currency">$</span>
+                        <span class="price-room">
+                            @Model.AccomodationPackage.FeePerNight
+                        </span>
+                        <span class="per">/ per night</span>
+                    </p>
+                    <strong>Rooms: @Model.AccomodationPackage.NoOfRoom</strong>
+                    <p>
+                        @Model.AccomodationPackage.AccomodationType.Description
+                    </p>
+                </div>
+                <div class="amenities-img animate-box" style="height:400px; background-image: url(/images/site/@thumbnailURL);"></div>
+
+                @if (Model.AccomodationPackage.AccomodationPackagePictures != null && Model.AccomodationPackage.AccomodationPackagePictures.Count > 0)
+                {
+                    foreach (var picture in Model.AccomodationPackage.AccomodationPackagePictures.Where(x=>x != thumbnailPicture))
+                    {
+                        <div class="amenities-img animate-box" style="height:400px; background-image: url(/images/site/@picture.Picture.URL);"></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -28,5 +28,14 @@ namespace HMS.Controllers
 
             return View(model);
         }
+
+        public ActionResult Details(int accomodationPackageID)
+        {
+            AccomodationPackageDetailsViewModel model = new AccomodationPackageDetailsViewModel();
+
+            model.AccomodationPackage = accomodationPackagesService.GetAccomodationPackageByID(accomodationPackageID);
+
+            return View(model);
+        }
     }
 }
