@@ -1,8 +1,8 @@
 ﻿@model HMS.ViewModels.AccomodationPackageDetailsViewModel
 
-@{  
-   var thumbnailPicture = Model.AccomodationPackage.AccomodationPackagePictures != null ? Model.AccomodationPackage.AccomodationPackagePictures.FirstOrDefault() : null;
-   var thumbnailURL = thumbnailPicture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+@{
+    var thumbnailPicture = Model.AccomodationPackage.AccomodationPackagePictures != null ? Model.AccomodationPackage.AccomodationPackagePictures.FirstOrDefault() : null;
+    var thumbnailURL = thumbnailPicture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
 }
 
 <aside id="colorlib-hero">
@@ -46,7 +46,7 @@
 
                 @if (Model.AccomodationPackage.AccomodationPackagePictures != null && Model.AccomodationPackage.AccomodationPackagePictures.Count > 0)
                 {
-                    foreach (var picture in Model.AccomodationPackage.AccomodationPackagePictures.Where(x=>x != thumbnailPicture))
+                    foreach (var picture in Model.AccomodationPackage.AccomodationPackagePictures.Where(x => x != thumbnailPicture))
                     {
                         <div class="amenities-img animate-box" style="height:400px; background-image: url(/images/site/@picture.Picture.URL);"></div>
                     }
@@ -55,3 +55,83 @@
         </div>
     </div>
 </div>
+
+<div id="colorlib-contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 animate-box">
+                <h3>Confirm Booking</h3>
+            </div>
+            <div class="col-md-10 col-md-offset-1 animate-box">
+                <h3>Get In Touch</h3>
+                <form action="#" id="frmConfirmBooking">
+                    <input type="hidden" name="AccomodationPackageID" value="@Model.AccomodationPackage.ID" />
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="fname">Check In Date</label>
+                            <input type="text" id="FromDate" name="FromDate" class="form-control" placeholder="Check In Date" autocomplete="off">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lname">Duration of Stay Nights</label>
+                            <select id="Duration" name="Duration" class="form-control" placeholder="Duration of Stay Nights">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="NoOfAdults">No of Adults</label>
+                            <input type="number" id="NoOfAdults" name="NoOfAdults" class="form-control" value="1" min="1" max="10">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="NoOfAdults">No of Children</label>
+                            <input type="number" id="NoOfChildren" name="NoOfChildren" class="form-control" value="0" min="0" max="10">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="fname">Guest Name</label>
+                            <input type="text" id="Name" name="Name" class="form-control" placeholder="Guest Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email</label>
+                            <input type="text" id="Email" name="Email" class="form-control" placeholder="Your email address">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <label for="message">Add Special Notes</label>
+                            <textarea name="Notes" id="Notes" cols="30" rows="10" class="form-control" placeholder="Add Special Notes"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="button" id="btnCheckAvailability" value="Check Availability" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#FromDate').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '+3d'
+    });
+
+    $('#btnCheckAvailability').click(function () {
+        $.ajax({
+            url: '@Url.Action("CheckAvailability", "Accomodations")',
+            data: $("#frmConfirmBooking").serialize()
+		})
+		.done(function (response) {
+			$("#actionModal .modal-dialog").html(response);
+		});
+    });
+</script>
